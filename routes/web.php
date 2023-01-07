@@ -18,4 +18,8 @@ Route::get('/', function () {
     return view('kanban');
 })->middleware('auth');
 
+Route::middleware('auth')->group(function () {
+    Route::view('user/{user}/boards', 'boards')->name('user.boards');
+});
+
 Auth::routes();
