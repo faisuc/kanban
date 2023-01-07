@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\V1\BoardController;
+use App\Http\Controllers\Api\V1\CardController;
+use App\Http\Controllers\Api\V1\ColumnController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('v1')->group(function () {
+        Route::prefix('user')->group(function () {
+            Route::prefix('{user}')->group(function () {
+                Route::apiResource('boards', BoardController::class)->only('index');
+            });
+        });
+        Route::apiResource('boards', BoardController::class)->except('index');
+        Route::apiResource('columns', ColumnController::class)->except('index', 'show');
+        Route::apiResource('cards', CardController::class)->except('index');
+    });
 });
