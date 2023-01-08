@@ -22,7 +22,8 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::middleware('auth')->group(function () {
-    Route::view('user/{user}/boards', 'boards')->name('user.boards');
+    Route::view('user/{user}/boards', 'boards.index')->name('user.boards');
+    Route::view('boards/{board}', 'boards.show')->name('user.boards.show');
 });
 
 Route::prefix('api')->group(function () {
