@@ -6,6 +6,6 @@
 
 @section('content')
 <div class="container">
-    SHOWING BOARD
+    <board-show board-id="{{ request()->route('board') }}"></board-show>
 </div>
 @endsection
