@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{ board.title }}</h5>
-                    <a href="route('user.posts.show', board.id)" class="btn btn-primary">View</a>
+                    <a :href="route('user.boards.show', board.id)" class="btn btn-primary">View</a>
                 </div>
             </div>
         </div>
