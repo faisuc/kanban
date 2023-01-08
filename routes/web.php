@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\V1\BoardController;
+use App\Http\Controllers\Api\V1\CardController;
+use App\Http\Controllers\Api\V1\ColumnController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +23,19 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     Route::view('user/{user}/boards', 'boards')->name('user.boards');
+});
+
+Route::prefix('api')->group(function () {
+    Route::prefix('v1')->group(function () {
+        Route::prefix('user')->group(function () {
+            Route::prefix('{user}')->group(function () {
+                Route::apiResource('boards', BoardController::class)->only('index');
+            });
+        });
+        Route::apiResource('boards', BoardController::class)->except('index');
+        Route::apiResource('columns', ColumnController::class)->except('index', 'show');
+        Route::apiResource('cards', CardController::class)->except('index');
+    });
 });
 
 Auth::routes();

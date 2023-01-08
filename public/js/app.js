@@ -20831,8 +20831,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  inject: ['loggedInUserID'],
+  created: function created() {
+    this.fetchBoards();
+  },
+  methods: {
+    fetchBoards: function fetchBoards() {
+      fetch('/api/v1/user/' + this.loggedInUserID + '/boards').then(function (res) {
+        console.log(res.data);
+      });
+    }
   }
 });
 
@@ -20870,7 +20878,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_BoardIndex_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/BoardIndex.vue */ "./resources/js/components/BoardIndex.vue");
 
 
-var app = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
+var app = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({
+  provide: {
+    loggedInUserID: document.querySelector("meta[name='user-id']").getAttribute("content")
+  }
+});
 
 app.component('board-index', _components_BoardIndex_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
 app.mount('#app');

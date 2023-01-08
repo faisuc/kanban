@@ -16,16 +16,3 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-Route::middleware('auth:sanctum')->group(function () {
-    Route::prefix('v1')->group(function () {
-        Route::prefix('user')->group(function () {
-            Route::prefix('{user}')->group(function () {
-                Route::apiResource('boards', BoardController::class)->only('index');
-            });
-        });
-        Route::apiResource('boards', BoardController::class)->except('index');
-        Route::apiResource('columns', ColumnController::class)->except('index', 'show');
-        Route::apiResource('cards', CardController::class)->except('index');
-    });
-});
