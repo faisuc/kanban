@@ -13,7 +13,8 @@
                           <textarea v-model="description" class="form-control" rows="3"></textarea>
                       </div>
                       <div class="form-group">
-                        <button type="button" class="btn btn-secondary mr-5" @click="$emit('close-card-modal')">Close</button>
+                        <button type="button" class="btn btn-secondary" style="margin-right: 5px;" @click="$emit('close-card-modal')">Close</button>
+                        <button type="button" class="btn btn-secondary" style="margin-right: 5px;" @click="deleteCard">Delete</button>
                         <button type="submit" class="btn btn-primary">Update</button>
                       </div>
                   </form>
@@ -39,6 +40,12 @@
                   this.$emit('card-updated', response.data.data);
                   this.$emit('close-card-modal');
                 });
+          },
+          deleteCard() {
+            axios.delete('/api/v1/cards/' + this.card.id)
+              .then(response => {
+                this.$parent.$emit('card-deleted', this.card);
+              });
           }
         }
     }

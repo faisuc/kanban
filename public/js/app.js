@@ -20899,6 +20899,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response);
       });
+    },
+    cardDeleted: function cardDeleted(card) {
+      document.getElementById('card-container-' + card.id).remove();
     }
   }
 });
@@ -21135,6 +21138,12 @@ __webpack_require__.r(__webpack_exports__);
         _this.$emit('card-updated', response.data.data);
         _this.$emit('close-card-modal');
       });
+    },
+    deleteCard: function deleteCard() {
+      var _this2 = this;
+      axios["delete"]('/api/v1/cards/' + this.card.id).then(function (response) {
+        _this2.$parent.$emit('card-deleted', _this2.card);
+      });
     }
   }
 });
@@ -21275,8 +21284,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     item: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function (_ref) {
       var element = _ref.element;
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_column_card, {
+        id: 'card-container-' + element.id,
+        onCardDeleted: $options.cardDeleted,
         card: element
-      }, null, 8 /* PROPS */, ["card"])];
+      }, null, 8 /* PROPS */, ["id", "onCardDeleted", "card"])];
     }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["modelValue", "onChange"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_card_create, {
@@ -21555,7 +21566,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-        onSubmit: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+        onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return $options.update && $options.update.apply($options, arguments);
         }, ["prevent"]))
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
@@ -21573,11 +21584,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         rows: "3"
       }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.description]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         type: "button",
-        "class": "btn btn-secondary mr-5",
+        "class": "btn btn-secondary",
+        style: {
+          "margin-right": "5px"
+        },
         onClick: _cache[2] || (_cache[2] = function ($event) {
           return _ctx.$emit('close-card-modal');
         })
-      }, "Close"), _hoisted_9])], 32 /* HYDRATE_EVENTS */)])])])];
+      }, "Close"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        type: "button",
+        "class": "btn btn-secondary",
+        style: {
+          "margin-right": "5px"
+        },
+        onClick: _cache[3] || (_cache[3] = function () {
+          return $options.deleteCard && $options.deleteCard.apply($options, arguments);
+        })
+      }, "Delete"), _hoisted_9])], 32 /* HYDRATE_EVENTS */)])])])];
     }),
 
     _: 1 /* STABLE */

@@ -27,7 +27,7 @@
                         ghost-class="ghost"
                     >
                         <template #item="{element}">
-                            <column-card :card="element"></column-card>
+                            <column-card :id="'card-container-' + element.id" @card-deleted="cardDeleted" :card="element"></column-card>
                         </template>
                     </draggable>
                     <card-create @card-added="addCard" :column-id="column.id"></card-create>
@@ -108,6 +108,9 @@ export default {
                 .then(response => {
                     console.log(response);
                 });
+        },
+        cardDeleted(card) {
+            document.getElementById('card-container-' + card.id).remove();
         }
     }
 }
