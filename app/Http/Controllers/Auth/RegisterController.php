@@ -81,6 +81,6 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        return route('user.boards', auth()->user());
+        return to_route('user.boards', auth()->user());
     }
 }
