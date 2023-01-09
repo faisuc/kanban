@@ -21,6 +21,7 @@
                     <template v-for="card in column.cards" :key="card.id">
                         <column-card :card="card"></column-card>
                     </template>
+                    <card-create @card-added="addCard" :column-id="column.id"></card-create>
                 </div>
             </div>
         </div>
@@ -44,6 +45,21 @@
                             document.getElementById('column-' + id).remove();
                         });
                 }
+            },
+            addCard(card) {
+                if (this.column.cards === undefined) {
+                    this.column.cards = [];
+                }
+
+                this.column.cards.push({
+                    column_id: card.column_id,
+                    id: card.id,
+                    owner_id: card.owner_id,
+                    title: card.title,
+                    description: card.description,
+                    created_at: card.created_at,
+                    updated_at: card.updated_at
+                });
             },
             update(id) {
                 axios.patch('/api/v1/columns/' + id, { title: this.$refs.titleInput.value })
