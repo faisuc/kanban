@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('board_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

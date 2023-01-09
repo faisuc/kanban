@@ -18,6 +18,8 @@ return [
         'passwords' => 'users',
     ],
 
+    'access_token' => 'validateAccessToken123',
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
