@@ -5,10 +5,6 @@
                 <div class="card-title">
                     <a href="" class="lead font-weight-light">{{  card.title }}</a>
                 </div>
-                <p>
-                    {{ card.description }}
-                </p>
-                <button class="btn btn-primary btn-sm">View</button>
             </div>
         </div>
         <div class="dropzone rounded"> &nbsp; </div>
