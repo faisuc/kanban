@@ -5,13 +5,17 @@
     </div>
     <div class="row">
         <div v-for="board in boards" :key="board.id" class="col-sm-3 p-2">
-            <div class="card">
+            <div :id="'board-' + board.id" class="card">
                 <div class="card-body">
                     <h5 class="card-title">{{ board.title }}</h5>
-                    <a :href="route('user.boards.show', board.id)" class="btn btn-primary">View</a>
+                    <a :href="route('user.boards.show', board.id)" class="btn btn-primary" style="margin-right: 10px;">View</a>
+                    <a @click.prevent="deleteBoard(board.id)" href="#" class="btn btn-secondary">Delete</a>
                 </div>
             </div>
         </div>
+        <template v-if="boards.length == 0">
+            <p>No boards created</p>
+        </template>
     </div>
 </template>
 
@@ -35,6 +39,14 @@ export default {
         },
         addBoard(board) {
             this.boards.push(board);
+        },
+        deleteBoard(id) {
+            if (confirm("Are you sure?")) {
+                axios.delete('/api/v1/boards/' + id)
+                    .then(response => {
+                        this.fetchBoards();
+                    });
+            }
         }
     }
 }

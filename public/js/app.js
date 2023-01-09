@@ -21006,6 +21006,14 @@ __webpack_require__.r(__webpack_exports__);
     },
     addBoard: function addBoard(board) {
       this.boards.push(board);
+    },
+    deleteBoard: function deleteBoard(id) {
+      var _this2 = this;
+      if (confirm("Are you sure?")) {
+        axios["delete"]('/api/v1/boards/' + id).then(function (response) {
+          _this2.fetchBoards();
+        });
+      }
     }
   }
 });
@@ -21367,9 +21375,7 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 var _hoisted_3 = {
   "class": "row"
 };
-var _hoisted_4 = {
-  "class": "card"
-};
+var _hoisted_4 = ["id"];
 var _hoisted_5 = {
   "class": "card-body"
 };
@@ -21377,6 +21383,10 @@ var _hoisted_6 = {
   "class": "card-title"
 };
 var _hoisted_7 = ["href"];
+var _hoisted_8 = ["onClick"];
+var _hoisted_9 = {
+  key: 0
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_board_create = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("board-create");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_board_create, {
@@ -21385,11 +21395,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       key: board.id,
       "class": "col-sm-3 p-2"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(board.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      id: 'board-' + board.id,
+      "class": "card"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h5", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(board.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       href: _ctx.route('user.boards.show', board.id),
-      "class": "btn btn-primary"
-    }, "View", 8 /* PROPS */, _hoisted_7)])])]);
-  }), 128 /* KEYED_FRAGMENT */))])], 64 /* STABLE_FRAGMENT */);
+      "class": "btn btn-primary",
+      style: {
+        "margin-right": "10px"
+      }
+    }, "View", 8 /* PROPS */, _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      onClick: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+        return $options.deleteBoard(board.id);
+      }, ["prevent"]),
+      href: "#",
+      "class": "btn btn-secondary"
+    }, "Delete", 8 /* PROPS */, _hoisted_8)])], 8 /* PROPS */, _hoisted_4)]);
+  }), 128 /* KEYED_FRAGMENT */)), $data.boards.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_9, "No boards created")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -21413,6 +21435,9 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "row flex-row flex-sm-nowrap py-3 board-columns-container"
 };
+var _hoisted_3 = {
+  key: 0
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_board_column_create = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("board-column-create");
   var _component_board_column = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("board-column");
@@ -21424,7 +21449,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       key: column.id,
       column: column
     }, null, 8 /* PROPS */, ["column"]);
-  }), 128 /* KEYED_FRAGMENT */))])], 64 /* STABLE_FRAGMENT */);
+  }), 128 /* KEYED_FRAGMENT */))]), $data.columns.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_3, "No columns created")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),

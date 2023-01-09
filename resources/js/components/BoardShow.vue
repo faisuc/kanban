@@ -9,6 +9,9 @@
             <board-column :column="column"></board-column>
         </template>
     </div>
+    <template v-if="columns.length == 0">
+        <p>No columns created</p>
+    </template>
 </template>
 
 <script>
