@@ -1,6 +1,7 @@
 <template>
     <div class="d-flex flex-row justify-content-between">
         <h3>Board</h3>
+        <input class="btn btn-dark" @click="dumpSQL" type="button" value="DUMP DATABASE">
         <board-create @board-added="addBoard"></board-create>
     </div>
     <div class="row">
@@ -20,6 +21,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     inject: ['loggedInUserID'],
     data() {
@@ -47,6 +49,12 @@ export default {
                         this.fetchBoards();
                     });
             }
+        },
+        dumpSQL() {
+            axios.post('/api/v1/db-dump')
+                .then(response => {
+                    alert(response.data.meta_data.message);
+                });
         }
     }
 }

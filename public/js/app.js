@@ -20990,6 +20990,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   inject: ['loggedInUserID'],
   data: function data() {
@@ -21003,7 +21005,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     fetchBoards: function fetchBoards() {
       var _this = this;
-      axios.get('/api/v1/user/' + this.loggedInUserID + '/boards').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0__["default"].get('/api/v1/user/' + this.loggedInUserID + '/boards').then(function (response) {
         _this.boards = response.data.data;
       });
     },
@@ -21013,10 +21015,15 @@ __webpack_require__.r(__webpack_exports__);
     deleteBoard: function deleteBoard(id) {
       var _this2 = this;
       if (confirm("Are you sure?")) {
-        axios["delete"]('/api/v1/boards/' + id).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_0__["default"]["delete"]('/api/v1/boards/' + id).then(function (response) {
           _this2.fetchBoards();
         });
       }
+    },
+    dumpSQL: function dumpSQL() {
+      axios__WEBPACK_IMPORTED_MODULE_0__["default"].post('/api/v1/db-dump').then(function (response) {
+        alert(response.data.meta_data.message);
+      });
     }
   }
 });
@@ -21400,7 +21407,14 @@ var _hoisted_9 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_board_create = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("board-create");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_board_create, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "btn btn-dark",
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.dumpSQL && $options.dumpSQL.apply($options, arguments);
+    }),
+    type: "button",
+    value: "DUMP DATABASE"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_board_create, {
     onBoardAdded: $options.addBoard
   }, null, 8 /* PROPS */, ["onBoardAdded"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.boards, function (board) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {

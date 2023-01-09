@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\BoardController;
 use App\Http\Controllers\Api\V1\CardController;
 use App\Http\Controllers\Api\V1\ColumnController;
+use App\Http\Controllers\Api\V1\DBDumperController;
 use App\Http\Controllers\Api\V1\MoveCardController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +39,8 @@ Route::prefix('api')->group(function () {
         Route::apiResource('columns', ColumnController::class)->except('index', 'show');
         Route::apiResource('cards', CardController::class)->except('index');
         Route::patch('cards/{card}/move', MoveCardController::class);
+
+        Route::post('db-dump', DBDumperController::class);
     });
 });
 
