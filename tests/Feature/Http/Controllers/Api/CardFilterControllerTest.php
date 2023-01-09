@@ -30,7 +30,7 @@ class CardFilterControllerTest extends TestCase
             ->count(3)
             ->create();
 
-        $this->getJson('api/list-cards?access_token=' . config('auth.access_token') . '&date=2023-01-01')
+        $this->getJson('api/list-cards?access_token=' . config('app.access_token') . '&date=2023-01-01')
             ->assertJsonCount(10, 'data');
     }
 
@@ -45,17 +45,17 @@ class CardFilterControllerTest extends TestCase
             $card->delete();
         });
 
-        $this->getJson('api/list-cards?access_token=' . config('auth.access_token') . '&status=1')
+        $this->getJson('api/list-cards?access_token=' . config('app.access_token') . '&status=1')
             ->assertJsonCount(0, 'data');
         
-        $this->getJson('api/list-cards?access_token=' . config('auth.access_token') . '&status=0')
+        $this->getJson('api/list-cards?access_token=' . config('app.access_token') . '&status=0')
             ->assertJsonCount(16, 'data');
 
         $cards->each(function ($card) {
             $card->restore();
         });
 
-        $this->getJson('api/list-cards?access_token=' . config('auth.access_token') . '&status=1')
+        $this->getJson('api/list-cards?access_token=' . config('app.access_token') . '&status=1')
             ->assertJsonCount(16, 'data');
     }
 }

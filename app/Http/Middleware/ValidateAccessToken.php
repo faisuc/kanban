@@ -17,7 +17,7 @@ class ValidateAccessToken
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->access_token != config('auth.access_token')) {
+        if ($request->access_token != config('app.access_token')) {
             abort(Response::HTTP_UNAUTHORIZED);
         }
 
