@@ -23,6 +23,7 @@ class CardFactory extends Factory
             'column_id' => Column::factory(),
             'title' => $this->faker->word(),
             'description' => $this->faker->text(),
+            'position' => $this->faker->randomDigitNotZero(),
         ];
     }
 }

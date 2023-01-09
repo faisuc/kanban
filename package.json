@@ -26,6 +26,6 @@
     "dependencies": {
         "pinia": "^2.0.28",
         "vue-router": "^4.1.6",
-        "vuedraggable": "^2.24.3"
+        "vuedraggable": "^4.1.0"
     }
 }

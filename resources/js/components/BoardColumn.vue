@@ -18,9 +18,18 @@
                     </div>
                 </div>
                 <div class="items border border-light">
-                    <template v-for="card in column.cards" :key="card.id">
-                        <column-card :card="card"></column-card>
-                    </template>
+                    <draggable
+                        v-model="column.cards"
+                        group="cards"
+                        @change="onChange"
+                        item-key="id"
+                        drag-class="drag"
+                        ghost-class="ghost"
+                    >
+                        <template #item="{element}">
+                            <column-card :card="element"></column-card>
+                        </template>
+                    </draggable>
                     <card-create @card-added="addCard" :column-id="column.id"></card-create>
                 </div>
             </div>
@@ -29,45 +38,77 @@
 </template>
 
 <script>
-    export default {
-        props: ['column'],
-        data() {
-            return {
-                editing: false,
-                title: this.column.title,
-            }
-        },
-        methods: {
-            deleteColumn(id) {
-                if (confirm("Are you sure?")) {
-                    axios.delete('/api/v1/columns/' + id)
-                        .then(response => {
-                            document.getElementById('column-' + id).remove();
-                        });
-                }
-            },
-            addCard(card) {
-                if (this.column.cards === undefined) {
-                    this.column.cards = [];
-                }
+import draggable from "vuedraggable";
 
-                this.column.cards.push({
-                    column_id: card.column_id,
-                    id: card.id,
-                    owner_id: card.owner_id,
-                    title: card.title,
-                    description: card.description,
-                    created_at: card.created_at,
-                    updated_at: card.updated_at
-                });
-            },
-            update(id) {
-                axios.patch('/api/v1/columns/' + id, { title: this.$refs.titleInput.value })
+export default {
+    props: ['column'],
+    components: {
+        draggable,
+    },
+    data() {
+        return {
+            editing: false,
+            title: this.column.title,
+        }
+    },
+    created() {
+        if (this.column.cards === undefined) {
+            this.column.cards = [];
+        }
+    },
+    methods: {
+        deleteColumn(id) {
+            if (confirm("Are you sure?")) {
+                axios.delete('/api/v1/columns/' + id)
                     .then(response => {
-                        this.editing = false;
-                        this.title = this.$refs.titleInput.value;
+                        document.getElementById('column-' + id).remove();
                     });
             }
+        },
+        addCard(card) {
+
+            this.column.cards.push({
+                column_id: card.column_id,
+                id: card.id,
+                owner_id: card.owner_id,
+                title: card.title,
+                position: card.position,
+                description: card.description,
+                created_at: card.created_at,
+                updated_at: card.updated_at
+            });
+        },
+        update(id) {
+            axios.patch('/api/v1/columns/' + id, { title: this.$refs.titleInput.value })
+                .then(response => {
+                    this.editing = false;
+                    this.title = this.$refs.titleInput.value;
+                });
+        },
+        onChange(e) {
+            let item = e.added || e.moved;
+
+            if (! item) return;
+
+            let index = item.newIndex;
+            let prevCard = this.column.cards[index - 1];
+            let nextCard = this.column.cards[index + 1];
+            let card = this.column.cards[index];
+            let position = card.position;
+
+            if (prevCard && nextCard) {
+                position = (prevCard.position + nextCard.position) / 2;
+            } else if (prevCard) {
+                position = prevCard.position + (prevCard.position / 2);
+            } else if (nextCard) {
+                position = nextCard.position / 2;
+            }
+
+            axios.patch('/api/v1/cards/' + card.id + '/move', { column_id: this.column.id, position: position})
+                .then(response => {
+                    console.log(response);
+                });
         }
     }
+}
 </script>

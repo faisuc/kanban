@@ -19,6 +19,7 @@ class CardResource extends JsonResource
             'owner' => new UserResource($this->owner),
             'column_id' => $this->column_id,
             'title' => $this->title,
+            'position' => $this->position,
             'description' => $this->description,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,

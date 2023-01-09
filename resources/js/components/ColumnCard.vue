@@ -16,3 +16,18 @@
         props: ['card'],
     }
 </script>
+
+<style scoped>
+.drag > div {
+    transform: rotate(5deg);
+}
+
+.ghost {
+    background: gray;
+    border-radius: 5px;
+}
+
+.ghost > div {
+    visibility: hidden;
+}
+</style>

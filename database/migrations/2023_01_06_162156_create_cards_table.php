@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('column_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->double('position');
             $table->timestamps();
         });
     }
