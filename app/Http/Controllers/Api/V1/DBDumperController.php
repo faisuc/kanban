@@ -17,7 +17,7 @@ class DBDumperController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $dump = \Spatie\DbDumper\Databases\PostgreSql::create()
+        $dump = \Spatie\DbDumper\Databases\MySql::create()
             ->setDbName(env('DB_DATABASE'))
             ->setUserName(env('DB_USERNAME'))
             ->setPassword(env('DB_PASSWORD'))
