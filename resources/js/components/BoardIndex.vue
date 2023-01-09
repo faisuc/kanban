@@ -1,5 +1,8 @@
 <template>
-    <h3>Boards</h3>
+    <div class="d-flex flex-row justify-content-between">
+        <h3>Board</h3>
+        <board-create @board-added="addBoard"></board-create>
+    </div>
     <div class="row">
         <div v-for="board in boards" :key="board.id" class="col-sm-3 p-2">
             <div class="card">
@@ -29,6 +32,9 @@ export default {
                 .then(response => {
                     this.boards = response.data.data;
                 });
+        },
+        addBoard(board) {
+            this.boards.push(board);
         }
     }
 }

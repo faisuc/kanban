@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('kanban');
+    return to_route('user.boards', auth()->user());
 })->middleware('auth');
 
 Route::middleware('auth')->group(function () {
